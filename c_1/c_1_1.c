@@ -73,6 +73,20 @@ int main(){
     char r[MAXLINE];
     int j;
     j = 0;
+    printf("Hello Geek\b\b\b\b\bF");
+    // \b - backspace character transfers
+    // the cursor one character back with
+    // or without deleting on different
+    // compilers.
+    printf("Testing \\ backslash");
+    printf("\' testing single and \" single quotes");
+    printf("5 = \0725");
+    //Here 000 is one to three octal digits(0….7) means there must be atleast one octal digit after \ and maximum three.
+    //Here 072 is the octal notation, first it is converted to decimal notation that is the ASCII value of char ‘:’.
+    // At the place of \072 there is : and the output is A:5.
+    printf("testing the \c");//\c is an unknown escape sequence.
+    printf("%%");
+    printf("\%")//Why this is working properly.
     j = getline(t, MAXLINE);
     escape(s, t);
     escapereverse(r, s);
