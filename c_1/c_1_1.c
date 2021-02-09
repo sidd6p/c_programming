@@ -59,7 +59,7 @@ void escapereverse(char r[], char s[]){
 
 
 int getline(char t[], int lim){
-    int c, i;
+    int c, i, j;
     for(i = 0; i < lim-1 && (c = getchar()) != EOF ; ++i){
         t[i] = c;
     }

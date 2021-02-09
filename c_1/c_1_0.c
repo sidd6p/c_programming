@@ -27,6 +27,7 @@ int main(){
   printf("Testing \\ backslash\n");
   printf("\' testing single and \" single quotes\n");
   printf("5 = \0725\n");
+  //'as', value inside the single quotes represent the character constant which is a numerical value for the machine to understand.
   //Here 000 is one to three octal digits(0….7) means there must be atleast one octal digit after \ and maximum three.
   //Here 072 is the octal notation, first it is converted to decimal notation that is the ASCII value of char ‘:’.
   // At the place of \072 there is : and the output is A:5.

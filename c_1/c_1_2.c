@@ -11,7 +11,7 @@ int main(){
 
     max = 10;
     while((len = getline(line, MAXLINE)) > 0){
-        if(len - 1 >= max){//because we should not include '\n' as a character 
+        if(len - 1 >= max){//because we should not include '\n' as a character
            printf("%s", line);
         }
     }
@@ -30,5 +30,3 @@ int getline(char line[], int lim){
     line[i] = '\0';
     return i;
 }
-
-
