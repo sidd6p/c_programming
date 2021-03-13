@@ -2,20 +2,27 @@
 #define MAXLINE 1000
 int getlines(char line[], int max);
 int strindex(char source[], char searchfor[]);
+void strindex_modified(char source[], char searchfor[]);
 void null_return();
 int test_retunr();
 
 char pattern[] = "ould";
+char output_string[MAXLINE];
+static int index = 0;
+
 int main(){
   int i = 100;
   char line[MAXLINE];
   int found = 0;
   while(getlines(line, MAXLINE) > 0){
-    if(strindex(line, pattern) >= 0){
+  /*  if(strindex_modified(line, pattern) >= 0){
       printf("%s", line);
       found++;
-    }
+    }*/
+    strindex_modified(line, pattern);
   }
+  output_string[index] = '\0';
+  printf("%s", output_string);
 //  i = null_return();
   //printf("%d", i);
   printf("%d", test_retunr());
@@ -46,6 +53,25 @@ int strindex(char s[], char t[]){
     }
   }
   return -1;
+}
+
+void strindex_modified(char source[], char searchfor[]){
+  int i, j, k;
+  i = j = k = 0;
+  for(i; source[i] != '\0'; i++){
+    for(j = i, k = 0; searchfor[k] == source [j]; j++, k++){
+      ;
+    }
+    if((k != 0) && (searchfor[k] == '\0')){
+      i = 0;
+      do{
+        output_string[index] = searchfor[i];
+        i++;
+        index++;
+      }while(source[i] != '\0');
+      return ;
+    }
+  }
 }
 
 void null_return(){
