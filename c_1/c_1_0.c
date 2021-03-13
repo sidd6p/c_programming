@@ -13,9 +13,9 @@ int main(){
   c = getchar();//Declaration: int getchar(void)
   printf("Entered character is: ");
   printf("%c\n", c);
-  putchar("c");//Declaration: int putchar(int char)
+  putchar('A');//Declaration: int putchar(int char)
   putchar('\n');
-
+  
   j = getchar();
   printf("j = %d\n", j);
   printf("j != EOF = %d\n", j != EOF);
