@@ -4,7 +4,6 @@
 int main()
 {
 pid_t  pid;
-int status;
         pid = fork();
         if (pid < 0) {
                 fprintf(stderr, "Fork Failed");
