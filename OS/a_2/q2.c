@@ -1,18 +1,22 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
 #define MAXCHARACTER 256
 
 int anagram_check();
 int isomorphic_check();
 
 int anagram_check(){
+  fflush(stdin);
+  fflush(stdout);
   int c, ncharcte1[MAXCHARACTER], ncharcte2[MAXCHARACTER], i;
   i = 0;
   for(i; i < MAXCHARACTER; i++){
     ncharcte1[i] = ncharcte2[i] = 0;
   }
-    printf("Enter first string");
+    printf("Enter first string\n");
     fflush(stdin);
     while((c = getchar()) != '\n'){
       ncharcte1[c - '0']++;
@@ -31,12 +35,14 @@ int anagram_check(){
 }
 
 int isomorphic_check(){
+  fflush(stdin);
+  fflush(stdout);
   int c, ncharcte1[MAXCHARACTER], ncharcte2[MAXCHARACTER], i;
   i = 0;
-  for(i; i < MAXCHARACTER; i++){
+  for(i = 0; i < MAXCHARACTER; i++){
     ncharcte1[i] = ncharcte2[i] = 0;
   }
-    printf("Enter first string");
+    printf("Enter first string\n");
     fflush(stdin);
     while((c = getchar()) != '\n'){
       ncharcte1[c - '0']++;
@@ -47,7 +53,7 @@ int isomorphic_check(){
       ncharcte2[c - '0']++;
     }
     for(i = 0; i < MAXCHARACTER; i++){
-      for(int j = 0; i < MAXCHARACTER; j++){
+      for(int j = 0; j < MAXCHARACTER; j++){
         if(ncharcte1[i] == ncharcte2[j]){
           ncharcte1[i] = ncharcte2[j] = 0;
           break;
@@ -59,6 +65,7 @@ int isomorphic_check(){
         return 0;
       }
     }
+    return 1;
 
 }
 
@@ -72,7 +79,7 @@ pid_t  pid;
                 return 1;
         }
         else if (pid == 0) {
-                printf("\nChild Process is executing\n");
+                printf("\nChild Process is executing isomorphic\n");
                 if(isomorphic_check()){
                   printf("Given string are isomorphic\n");
                 }
@@ -82,7 +89,8 @@ pid_t  pid;
         }
         else
         {
-                printf("\nParent Process is executing\n");
+          wait(NULL);
+                printf("\nParent Process is executing anagram\n");
                 if(anagram_check()){
                   printf("Given string are anagram\n");
                 }
