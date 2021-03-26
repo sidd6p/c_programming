@@ -1,3 +1,5 @@
+//https://www.geeksforgeeks.org/thread-functions-in-c-c/
+//experiment with fork and thread on data sharing
 #include<stdio.h>
 #include<pthread.h>
 #include<stdlib.h>
