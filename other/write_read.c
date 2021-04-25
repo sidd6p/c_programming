@@ -36,6 +36,8 @@ int main(){
     size_8 = read(0, buff, 10);
     printf("%d", size_8);
 
+    printf("ok\n");
+
     size_9 = read(0, buff, count_1);
     printf("%d", size_9);
     size_10 = write(1, buff, size_9);
