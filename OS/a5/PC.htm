@@ -1,0 +1,105 @@
+
+<!-- saved from url=(0052)http://www.csc.villanova.edu/~mdamian/threads/PC.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body>
+<!--<basefont size=2>-->
+<pre>#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;semaphore.h&gt;
+
+#define BUFF_SIZE   5		/* total number of slots */
+#define NP          3		/* total number of producers */
+#define NC          3		/* total number of consumers */
+#define NITERS      4		/* number of items produced/consumed */
+<font color="brown">
+typedef struct {
+    int buf[BUFF_SIZE];   /* shared var */
+    int in;         	  /* buf[in%BUFF_SIZE] is the first empty slot */
+    int out;        	  /* buf[out%BUFF_SIZE] is the first full slot */
+    sem_t full;     	  /* keep track of the number of full spots */
+    sem_t empty;    	  /* keep track of the number of empty spots */
+    sem_t mutex;    	  /* enforce mutual exclusion to shared data */
+} sbuf_t;
+
+sbuf_t shared;
+</font>
+<font color="blue"><b>void *Producer(void *arg)</b></font>
+{
+    int i, item, index;
+
+    index = (int)arg;
+
+    pthread_detach(pthread_self()); 
+
+    for (i=0; i &lt; NITERS; i++) {
+
+        <font color="green">/* Produce item */</font>
+        item = i;	
+
+        <font color="green">/* Prepare to write item to buf */</font>
+
+        /* If there are no empty slots, wait */
+        <font color="blue"><b>sem_wait</b></font>(&amp;shared.empty);
+        /* If another thread uses the buffer, wait */
+        <font color="blue"><b>sem_wait</b></font>(&amp;shared.mutex);
+        shared.buf[shared.in] = item;
+        shared.in = (shared.in+1)%BUFF_SIZE;
+        printf("[P%d] Producing %d ...\n", index, item); fflush(stdout);
+        /* Release the buffer */
+        <font color="blue"><b>sem_post</b></font>(&amp;shared.mutex);
+        /* Increment the number of full slots */
+        <font color="blue"><b>sem_post</b></font>(&amp;shared.full);
+
+        /* Interleave  producer and consumer execution */
+        if (i % 2 == 1) sleep(1);
+    }
+    return NULL;
+}
+
+<font color="blue"><b>void *Consumer(void *arg)</b></font>
+{
+    <font color="red">/* Fill in the code here */</font>
+}
+
+int main()
+{
+    pthread_t idP, idC;
+    int index;
+
+    <font color="blue"><b>sem_init</b></font>(&amp;shared.full, 0, 0);
+    <font color="blue"><b>sem_init</b></font>(&amp;shared.empty, 0, BUFF_SIZE);
+
+    <font color="red">/* Insert code here to initialize mutex*/</font>
+
+    for (index = 0; index &lt; NP; index++)
+    {  
+       /* Create a new producer */
+       <font color="blue"><b>pthread_create(&amp;idP, NULL, Producer, (void*)index);</b></font><b>
+    }
+
+    <font color="red">/* Insert code here to create NC consumers */</font>
+
+    pthread_exit(NULL);
+}
+</b></pre><b>
+</b>
+<hr>
+<b>Important note:</b> You must link the <font color="red">pthread</font> 
+library to any program that uses pthreads. You must also link the runtime 
+library <font color="red">rt</font> to any program that uses semaphores. So 
+the compile command for the program above (call it prodcon.c) would be
+<pre>    <font color="red"><b>gcc -o prodcon prodcon.c -lpthread -lrt</b></font>
+</pre>
+<!--Also make sure that the compiler you are using is
+<pre><b>
+    <font color=red>/opt/gnu/bin/gcc</font>
+</b></pre>
+To learn what compiler you are using, type in at the shell prompt
+<pre><b>
+    <font color=red>which gcc</font>
+</b></pre>
+-->
+<hr size="4">
+
+
+</body></html>

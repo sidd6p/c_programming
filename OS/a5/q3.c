@@ -12,10 +12,25 @@ void best_fit();
 void worst_fit();
 
 int main(){
+    int choice = -1;
     input();
-    //first_fit();
-    best_fit();
-    //worst_fit();
+    printf("\nSelect the method:\n1-) First fit\n2-) Best fit\n3-) Worst fit\n");
+    scanf("%d", &choice);
+    printf("\n");
+    switch(choice){
+        case 1:
+        first_fit();
+        break;
+        case 2:
+        best_fit();
+        break;
+        case 3:
+        worst_fit();
+        break;
+        default:
+        printf("INVALID CHOICE\n");
+        break;
+    }
     return 0;
 }
 
@@ -52,7 +67,7 @@ void first_fit(){
             }
         }
         if(j == total_part){
-            printf("Not sufficient Memory space to accomadate PROCESS %d", i + 1);
+            printf("Not sufficient Memory space to accomadate PROCESS %d\n", i + 1);
             return;
         }
     }
@@ -63,19 +78,19 @@ void worst_fit(){
      for(int i = 0; i < total_proc; i++){
         int flag = -1;
         int temp[total_part];
-        memcpy(temp, part_size, sizeof(temp));//work = available
-        int max = temp[0];
+        memcpy(temp, part_size, sizeof(temp));
+        int max = -1;
         for(j = 0; j < total_part; j++){
             if(process_size[i] <= temp[j]){
                 temp[j] = temp[j] - process_size[i];
-                if(max < temp[j]){
-                       max = temp[j];
+                       if(max < temp[j]){
+                        max = temp[j];
                        flag = j;
                }
             }
         }
         if(flag == -1){
-            printf("Not sufficient Memory space to accomadate PROCESS %d", i + 1);
+            printf("Not sufficient Memory space to accomadate PROCESS %d\n", i + 1);
             return;
         }
         else{
@@ -95,20 +110,19 @@ void best_fit(){
      for(int i = 0; i < total_proc; i++){
         int flag = -1;
         int temp[total_part];
-        memcpy(temp, part_size, sizeof(temp));//work = available
-        int min;
+        memcpy(temp, part_size, sizeof(temp));
+        int min = 99999;
         for(j = 0; j < total_part; j++){
             if(process_size[i] <= temp[j]){
                 temp[j] = temp[j] - process_size[i];
                 if(min >= temp[j]){
                     min = temp[j];
                     flag = j;
-                    printf("ok\n");
                }
             }
         }
         if(flag == -1){
-            printf("Not sufficient Memory space to accomadate PROCESS %d", i + 1);
+            printf("Not sufficient Memory space to accomadate PROCESS %d\n", i + 1);
             return;
         }
         else{
