@@ -31,8 +31,8 @@ void func(int sockfd){
 }
 
 int main(){
-    int sockfd,connfd;
-    struct sockaddr_in servaddr,cli;
+    int sockfd;
+    struct sockaddr_in servaddr_c;
     sockfd=socket(AF_INET,SOCK_STREAM,0);
     if(sockfd==-1){
         printf("socket creation failed...\n");
@@ -40,11 +40,11 @@ int main(){
     }
     else
     printf("Socket successfully created..\n");
-    bzero(&servaddr,sizeof(servaddr));
-    servaddr.sin_family=AF_INET;
-    servaddr.sin_addr.s_addr=inet_addr("127.0.0.1");
-    servaddr.sin_port=htons(PORT);
-    if(connect(sockfd,(SA *)&servaddr,sizeof(servaddr))!=0){// int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+    bzero(&servaddr_c,sizeof(servaddr_c));
+    servaddr_c.sin_family=AF_INET;
+    servaddr_c.sin_addr.s_addr=htonl(INADDR_ANY);//inet_addr("127.0.0.1");
+    servaddr_c.sin_port=htons(PORT);
+    if(connect(sockfd,(SA *)&servaddr_c,sizeof(servaddr_c))!=0){// int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
     /*The connect() system call connects the socket referred to by the
        file descriptor sockfd to the address specified by addr.  The
        addrlen argument specifies the size of addr.  The format of the

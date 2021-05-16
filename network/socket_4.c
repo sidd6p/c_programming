@@ -64,7 +64,7 @@ void func(int sockfd){
 int main(){
     int sockfd;
     struct sockaddr_in servaddr;
-    sockfd=socket(AF_INET,SOCK_DGRAM,0);
+    sockfd=socket(AF_INET,SOCK_DGRAM,0);//int socket(int domain, int type, int protocol);
     if(sockfd==-1){
         printf("socket creation failed...\n");
         exit(0);
@@ -73,9 +73,9 @@ int main(){
     printf("Socket successfully created..\n");
     bzero(&servaddr,sizeof(servaddr));
     servaddr.sin_family=AF_INET;
-    servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
+    servaddr.sin_addr.s_addr=inet_addr("127.0.0.1");//htonl(INADDR_ANY);
     servaddr.sin_port=htons(PORT);
-    if((bind(sockfd,(SA *)&servaddr,sizeof(servaddr)))!=0){
+    if((bind(sockfd,(SA *)&servaddr,sizeof(servaddr)))!=0){//int bind(int socket, const struct sockaddr *addr, int address_len);
         printf("socket bind failed...\n");
         exit(0);
     }

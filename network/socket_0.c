@@ -10,7 +10,7 @@
 //htonl and htons are present in it
 #include<stdlib.h>
 #include<string.h>//bzero is present in it
-#include <unistd.h>
+#include<unistd.h>
 #define MAX 80
 #define PORT 43454
 #define SA struct sockaddr
@@ -60,6 +60,9 @@ int main(){
     bzero(&servaddr,sizeof(servaddr));
     servaddr.sin_family=AF_INET;
     servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
+    /*This allowed your program to work without knowing the IP address of the machine it was running on, or, in the case of a machine with multiple network interfaces,
+    it allowed your server to receive packets destined to any of the interfaces. 
+    In reality, the semantics of INADDR_ANY are more complex and involved.*/
     servaddr.sin_port=htons(PORT);
     /*htons host to network short
     ntohs network to host short
@@ -70,6 +73,14 @@ int main(){
         //int bind(int socket, const struct sockaddr *addr, int address_len);
         //The bind() function binds a unique local name to the socket with descriptor socket. After calling socket(), a descriptor does not have a name associated with it.
         //If the socket descriptor socket was created in the AF_INET domain, the format of the name buffer is expected to be sockaddr_in, as defined in the include file netinet/in.h
+        /*Parameter
+        Description
+        socket
+        The socket descriptor returned by a previous socket() call.
+        address
+        The pointer to a sockaddr structure containing the name that is to be bound to socket.
+        address_len
+        The size of address in bytes.*/
         printf("socket bind failed...\n");
         exit(0);
     }
