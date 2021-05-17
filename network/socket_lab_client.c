@@ -9,38 +9,37 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define MAX 80
-#define PORT 43454
+#define MAX 400
+#define PORT 43459
 #define SA struct sockaddr
 
 void func(int sockfd){
-    char buff[MAX];
+    int buff[MAX];
     int n;
     for(;;){
+        printf("\nPress a key to process:");
+        fflush(stdin);
+        fflush(stdout);
+        getchar();
+        fflush(stdin);
+        fflush(stdout);
         bzero(buff,sizeof(buff));//void bzero(void *s, size_t n);
-        printf("Enter the string : ");
+        printf("\nEnter the numbers with space: ");
         n=0;
-        while((buff[n++]=getchar())!='\n');
+        for(int i = 0; i < 2; i++){
+            scanf("%d", &buff[i]);
+          }
         write(sockfd,buff,sizeof(buff));
         bzero(buff,sizeof(buff));
         read(sockfd,buff,sizeof(buff));
-        printf("From Server : %s",buff);
-        if((strncmp(buff,"exit",4))==0){
-            printf("Client Exit...\n");
-            break;
-        }
+        printf("\nAverage is = : %f",buff[0]/3.0);
     }
 }
 
 int main(){
     int sockfd;
     struct sockaddr_in servaddr_c;
-    /*struct sockaddr_in {
-   short int            sin_family; 
-   unsigned short int   sin_port;
-   struct in_addr       sin_addr; 
-   unsigned char        sin_zero[8]; 
-};*/
+
     if((sockfd = socket(AF_INET,SOCK_STREAM,0)) == -1){ //int sockfd = socket(domain, type, protocol)
         perror("socket creation failed...");
         exit(-1);
