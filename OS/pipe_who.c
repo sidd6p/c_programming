@@ -12,20 +12,22 @@ int main()
                 perror( "pipe" );
                 exit( -1 );
         }
+        pid = fork();
         if ( pid > 0 ) {
                 close( 1 );
                 dup( pipeDesc[1] ) ;
                 close( pipeDesc[0]);
                 close(pipeDesc[1] );
-                execl("/bin/ls", "ls", "-il", NULL);
+                execl("/bin/ls", "ls", "-l", NULL);
                 }
         else
         {
+                printf("in child");
                 close( 0 );
-                dup ( pipeDesc [0 ]);
+                dup ( pipeDesc [0]);
                 close(pipeDesc[1]);
                 close(pipeDesc[0]);
-                execl("/bin/sort", "sort", NULL);
+                execl("/bin/grep", "grep","a.out",  NULL);
         }
         return 0;
 }

@@ -31,9 +31,9 @@ int main(){
   //Here 000 is one to three octal digits(0….7) means there must be atleast one octal digit after \ and maximum three.
   //Here 072 is the octal notation, first it is converted to decimal notation that is the ASCII value of char ‘:’.
   // At the place of \072 there is : and the output is A:5.
-  printf("testing the \c\n");//\c is an unknown escape sequence.
-  printf("%%\n");
-  printf("\%\n");//Why this is working properly.
+  //printf("testing the \c\n");//\c is an unknown escape sequence.
+  //printf("%%\n");
+  //printf("\%\n");//Why this is working properly.
 
 return 0;
 }

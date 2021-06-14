@@ -2,9 +2,13 @@
 #include<unistd.h>
 #include<stdio.h>
 int main(){
+  int i = 0;
+  printf("Fork example\n");
   printf("Hello earth before fork");
-  fflush(stdout);//uncomment if not usinf \n in last stdout
+  fflush(stdout);//uncomment if not using \n in last stdout
   fork();
-  printf("\nAfter fork\n");
+  i++;
+  printf("\nAfter fork, i = %d\t", i);
+  printf("\n");
   return 0;
 }

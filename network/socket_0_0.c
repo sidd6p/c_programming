@@ -7,43 +7,35 @@
 #include<stdlib.h>
 #include<string.h>
 #include<unistd.h>
-#define MAX 80
-#define PORT 43457
+#include<signal.h>
+#define MAX 10000
+#define PORT 43442
 #define SA struct sockaddr
+void handle_sigint(int sig){// server wants to end from its side
+    printf("\tSever exit....\n");
+    exit(0);
+}
+
 void func(int sockfd){
-    int buff[MAX];
+    char buff[MAX];
     int n;
     for(;;){
+        signal(SIGINT, handle_sigint);
         int avg = 0;
         int i = 0;
         bzero(buff,MAX);
         read(sockfd,buff,sizeof(buff));
-        if(buff[0] == '\0'){
+        if(buff[0] == '\0'){//if client from its side
             printf("server exit\n");
             break;
         }
-        printf("From client\n");
-        for(i = 0; i < 3; i++){
-            printf("%d\t", buff[i]);
-        }
+        printf("Message from the client: \t");
+        printf("%s", buff);
         printf("\n");
-        //putchar(buff[0]);
-        printf("\nEnter the string \n");
-        for(i = 0; i < 3; i++){
-            avg = avg + buff[i];
-        }
-        avg = avg / 3;
-        printf("\n average is %d\n", avg);
-       // printf("From client: %d\t To client : ",buff[0]);
         bzero(buff,MAX);
-        n=0;
-        buff[0] = avg;
-        //while((buff[n++]=getchar())!='\n');
+        printf("\nEnter the Message to CLIENT:  \t");
+        fgets(buff, MAX , stdin);
         write(sockfd,buff,sizeof(buff));
-        /*if(strncmp("exit",buff,4)==0){
-            printf("Server Exit...\n");
-            break;
-        }*/
     }
 }
 int main(){
@@ -51,8 +43,8 @@ int main(){
     struct sockaddr_in servaddr,cli;
     sockfd=socket(AF_INET,SOCK_STREAM,0);
         if(sockfd == -1){
-        printf("socket creation failed...\n");
-        exit(0);
+        perror("socket creation failed...");
+        exit(-1);
     }
     else
     printf("Socket successfully created..\n");
@@ -67,16 +59,16 @@ int main(){
     else
     printf("Socket successfully binded..\n");
     if((listen(sockfd,5))!=0){
-        printf("Listen failed...\n");
-        exit(0);
+        perror("Listen failed...");
+        exit(-1);
     }
     else
     printf("Server listening..\n");
     len=sizeof(cli);
     connfd=accept(sockfd,(SA *)&cli,&len);  
     if(connfd<0){
-        printf("server acccept failed...\n");
-        exit(0);
+        perror("server acccept failed...");
+        exit(-1);
     }
     else
     printf("server acccept the client...\n");

@@ -9,7 +9,7 @@ int main(){
   char mes1[50], mes2[50];
   strcpy(mes1, "Hello");
   if(pipe(pipe_desc) < 0){
-    perror("Pipi");
+    perror("Pipe");
     exit(-1);
   }
   if((pid = fork()) < 0){

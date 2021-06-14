@@ -1,6 +1,5 @@
-#include <sys/types.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <unistd.h>//coontain execlp()
 int main()
 {
   /*int i = 0;
@@ -15,16 +14,7 @@ pid_t  pid;
                 fprintf(stderr, "Fork Failed");
                 return 1;
         }
-        else if (pid == 0) {
-                printf("\nChild Process is executing\n");
-                printf("Child Process ID is %d\n" , getpid());
-                printf("It's Parent Process ID is %d\n" , getppid());
-                printf("pid variable in child process is %d\n", pid);
-                execlp("/bin/ls", "ls", NULL);
-                printf("\n..........................\n\n");//this line will not get execute after execlp
-        }
-        else
-        {
+        else if (pid != 0) {
                 printf("\nParent Process is executing\n");
                 printf("Parent Process ID is %d\n" , getpid());
                 printf("It's Parent Process ID is %d\n" , getppid());//ID of the parent’s parent process is the ID of the shell owned by us currently
@@ -32,5 +22,15 @@ pid_t  pid;
                 execlp("/bin/ls", "ls","-l", NULL);//why child is getting executed after exclep
                 printf("Inside parent process after execlp\n");
         }
+        else{
+                printf("\nChild Process is executing\n");
+                printf("Child Process ID is %d\n" , getpid());
+                printf("It's Parent Process ID is %d\n" , getppid());
+                printf("pid variable in child process is %d\n", pid);
+                execlp("/bin/ls", "ls", NULL);
+                printf("\n..........................\n\n");//this line will not get execute after execlp
+               
+        }
+        //both execlp will get execute after child and parent.
         return 0;
 }

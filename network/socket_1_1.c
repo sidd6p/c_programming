@@ -9,45 +9,35 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include<signal.h>
-#define MAX 80
-#define PORT 43457
+#define MAX 10000
+#define PORT 43442
 #define SA struct sockaddr
 
-void handle_sigint(int sig){
+void handle_sigint(int sig){// if client wnats to end from its side
     printf("\tClient exit....\n");
     exit(0);
 }
 
 void func(int sockfd){
-    int buff[MAX];
+    char buff[MAX];
     int n;
     for(;;){
         signal(SIGINT, handle_sigint);
         int i = 0;
         bzero(buff,sizeof(buff));
-        printf("Enter the string : ");
+        printf("Enter the Message to sERVER : ");
         n=0;
-        for(i = 0; i < 3; i++){
-            scanf("%d", &buff[i]);
-        }
-        //while((buff[n++]=getchar())!='\n');
+        fflush(stdin);
+        fgets(buff, MAX, stdin);
         write(sockfd,buff,sizeof(buff));
         bzero(buff,sizeof(buff));
         read(sockfd,buff,sizeof(buff));
-        if(buff[0] == '\0'){
+        if(buff[0] == '\0'){//if server exit from its side
             printf("server exit\n");
             break;
         }
-        printf("From server AVERAGE is %d\n", buff[0]);
-       /* for(int i = 0; i < 2; i++){
-            printf("%d\t", buff[i]);
-        }
-        printf("\n");*/
-        //putchar(buff[0]);
-        /*if((strncmp(buff,"exit",4))==0){
-            printf("Client Exit...\n");
-            break;
-        }*/
+        printf("Message From SERVER :\t %s\n",buff);
+        bzero(buff,MAX);
     }
 }
 
