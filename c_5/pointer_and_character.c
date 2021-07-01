@@ -6,7 +6,7 @@ int main(){
     char *pmessage_1;
     pmessage = "now is the time";
     pmessage = "Now is the time";
-    //pmessage[0] = 'N;//illegal
+    //pmessage[0] = 'N';//illegal
     printf("amessage[0] = %c\n", amessage[0]);
     printf("*amessage = %c\n", *amessage);//amessage[0]
     printf("pmessage[0] = %c\n", pmessage[0]);

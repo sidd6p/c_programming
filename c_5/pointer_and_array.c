@@ -7,9 +7,9 @@ int main(){
     //int (*arr_p_0)[5] = {5, 6, 7, 8, 9};//initialization makes pointer from integer without a cast [-Wint-conversion]
     int (*arr_p_1)[5];//pointer to array of size 5.
     arr_p_1 = &arr;
-    ptr = arr;//legal
+    ptr = arr;//legal and equivalent to "ptr = &arr[0]";
     //arr_p[0] = 'h';//illegal
-    //arr_0 = ptr;//illegal
+    //arr_0 = ptr;//illegal because pointers are variables, but arries are not variables.
     ptr[0] = 10;
     printf("ptr = %d\n",ptr);//&arr[0]
     printf("*ptr = %d\n",*ptr);//arr[0]
@@ -19,7 +19,7 @@ int main(){
     printf("*arr = %d\n",*arr);//arr[0]
     printf("*arr + 1 = %d\n",*(arr + 1));//arr[1]
     printf("arr[0]= %d\n",arr[0]);//arr[0]
-    //printf("arr++= %d\n",arr++);//illegal
+    //printf("arr++= %d\n",arr++);//illegal because array are not variable
     printf("++ptr= %d\n",++ptr);//&arr[1] = arr[0] + sizeof(int)
     printf("*arr_p= %c\n",*arr_p);//arr_p[0]
     printf("arr_p_1= %d\n",arr_p_1);//&arr[0]
@@ -29,6 +29,17 @@ int main(){
     we should get the array, and the name of array denotes the base address.
     So whenever a pointer to an array is dereferenced,
     we get the base address of the array to which it points.*/
+
+
+    float a = 2.0;
+    int *ptr_2 = &a;// ERROR, type mismatch
+    //The declaration int *a doesn't mean that a is going to contain an integer value.
+    //It means that a is going to contain the address of a variable storing integer value.
+
+    float *pt = &a;
+    printf("*pt = %f\n", *pt);
+    printf("pt = %d\n", pt);
+
     return 0;
 }
 
